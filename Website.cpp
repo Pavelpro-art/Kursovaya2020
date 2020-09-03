@@ -9,7 +9,36 @@ void Website::PuchGame() {
 }
 
 void Website::DeleteGame() {
+	try {
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		system("cls");
+		if (game.size() == 0)
+			throw exception("Game list on the website is empty");
 
+		ShowGame();
+		int number;
+
+		while (true) {
+			cout << endl << "Enter number game: ";
+			cin >> number;
+			if (cin.fail() || number < 1 || number > game.size()) {
+				cout << "The number of game is incorrect! Please re-enter!" << endl;
+				number = 0;
+				cin.clear();
+				cin.ignore(10000, '\n');
+			}
+			else
+				break;
+		}
+
+		game.erase(game.begin() + number - 1);
+
+		cout << "Game successfully deleted" << endl << endl;
+	}
+	catch (exception & ex) {
+		cout << ex.what() << endl << endl;
+	}
+}
 
 void Website::ShowGame() {
 	try {
